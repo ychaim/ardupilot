@@ -60,6 +60,7 @@
 #include <AP_ServoRelayEvents/AP_ServoRelayEvents.h>
 #include <AP_Stats/AP_Stats.h>                      // statistics library
 #include <AP_Terrain/AP_Terrain.h>
+#include <AP_RPM/AP_RPM.h>
 #include <AP_Vehicle/AP_Vehicle.h>                  // needed for AHRS build
 #include <AP_VisualOdom/AP_VisualOdom.h>
 #include <AP_WheelEncoder/AP_WheelEncoder.h>
@@ -176,6 +177,9 @@ private:
     // flight modes convenience array
     AP_Int8 *modes;
     const uint8_t num_modes = 6;
+
+    // AP_RPM Module
+    AP_RPM rpm_sensor;
 
     // Inertial Navigation EKF
 #if AP_AHRS_NAVEKF_AVAILABLE
@@ -442,6 +446,7 @@ private:
     void send_nav_controller_output(mavlink_channel_t chan);
     void send_servo_out(mavlink_channel_t chan);
     void send_pid_tuning(mavlink_channel_t chan);
+    void send_rpm(mavlink_channel_t chan);
     void send_wheel_encoder(mavlink_channel_t chan);
     void send_wheel_encoder_distance(mavlink_channel_t chan);
 
@@ -510,6 +515,7 @@ private:
     void set_servos(void);
 
     // system.cpp
+    void rpm_update(void);
     void init_ardupilot();
     void startup_ground(void);
     void update_ahrs_flyforward();
