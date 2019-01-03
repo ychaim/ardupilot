@@ -92,6 +92,12 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
         }
         break;
 
+    case MAV_CMD_DO_ENGINE_CONTROL:
+        rover.g2.ice_control.engine_control(cmd.content.do_engine_control.start_control,
+                                            cmd.content.do_engine_control.cold_start,
+                                            cmd.content.do_engine_control.height_delay_cm*0.01f);
+        break;
+
     default:
         // return false for unhandled commands
         return false;

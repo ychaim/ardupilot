@@ -769,9 +769,16 @@ void AP_MotorsUGV::output_throttle(SRV_Channel::Aux_servo_function_t function, f
         throttle = reverse_multiplier * fabsf(throttle);
     }
 
+    uint8_t ice_throttle_override_percent;
+
     // output to servo channel
     switch (function) {
         case SRV_Channel::k_throttle:
+            if (rover.g2.ice_control.throttle_override(ice_throttle_override_percent)) {
+                // the ICE controller wants to override the throttle for starting
+                throttle = ice_throttle_override_percent;
+            }
+            FALLTHROUGH;
         case SRV_Channel::k_motor1:
         case SRV_Channel::k_motor2:
         case SRV_Channel::k_motor3:
