@@ -19,6 +19,7 @@
 #pragma once
 
 #include "SIM_Aircraft.h"
+#include "SIM_ICEngine.h"
 
 namespace SITL {
 
@@ -44,7 +45,10 @@ private:
     float turning_circle;
     float skid_turn_rate;
     bool skid_steering;
+    bool ice_engine;
 
+    ICEngine icengine{2, 14, 12, 13, 100};
+    
     float turn_circle(float steering);
     float calc_yaw_rate(float steering, float speed);
     float calc_lat_accel(float steering_angle, float speed);
